@@ -8,8 +8,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg: #EAF6F0;
-    --bg-alt: #DDF0E8;
+    --bg: #FFFFFF;
+    --bg-alt: #FFFFFF;
     --panel: #FFFFFF;
     --ink: #33263F;
     --ink-soft: #6E6280;
@@ -42,7 +42,7 @@
   /* ---------- Header ---------- */
   header.top{
     position: sticky; top:0; z-index: 40;
-    background: rgba(234,246,240,0.9);
+    background: #fff;
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--mint-line);
     padding: 14px clamp(16px,4vw,44px);
@@ -53,13 +53,14 @@
   }
   .brand{ display:flex; align-items:center; gap:10px; }
   .brand-mark{
-    width:42px; height:42px; border-radius: var(--radius-blob);
-    background: linear-gradient(135deg, var(--pink), var(--lav));
+    width:220px; height:86px; border-radius:0;
+    background:transparent;
     display:flex; align-items:center; justify-content:center;
-    font-size:20px; box-shadow: var(--shadow-sm);
+    overflow:hidden;
   }
-  .brand-text .name{ font-size:1.4rem; font-weight:700; line-height:1; }
-  .brand-text .tag{ font-size:0.72rem; color: var(--ink-soft); letter-spacing:.04em; }
+  .brand-mark img{
+    width:100%; height:100%; object-fit:cover; object-position:center 45%;
+  }
 
   .top-right{ display:flex; align-items:center; gap:14px; }
 
@@ -69,7 +70,7 @@
     padding:7px 14px; border-radius:999px; font-weight:700; font-size:0.85rem; cursor:pointer;
     transition: all .18s ease;
   }
-  nav.groups button:hover{ border-color: var(--mint-line); color: var(--ink); }
+  nav.groups button:hover{ border-color: var(--pink-deep); color: var(--ink); }
   nav.groups button.active{
     background: linear-gradient(135deg, var(--pink), var(--pink-deep));
     color:#fff; border-color: transparent;
@@ -105,19 +106,19 @@
     font-size: clamp(2.2rem, 4.6vw, 3.4rem); line-height:1.05; margin:0 0 12px; font-weight:800;
   }
   .hero h1 .sq{ color: var(--pink-deep); position:relative; white-space:nowrap; }
-  .hero h1 .sq svg{ position:absolute; left:0; bottom:-8px; width:100%; height:10px; }
+  .hero h1 .sq svg{ position:absolute; left:0; bottom:9px; width:100%; height:10px; }
   .hero p.sub{ color: var(--ink-soft); font-size:1.03rem; max-width:44ch; margin:0 0 24px; }
   @media(max-width:820px){ .hero p.sub{ margin:0 auto 24px; } }
 
   .hero-stats{ display:flex; gap:10px; flex-wrap:wrap; }
   @media(max-width:820px){ .hero-stats{ justify-content:center; } }
   .stat-chip{
-    background:#fff; border:1.5px solid var(--mint-line); border-radius:16px; padding:10px 16px;
-    font-size:0.76rem; font-weight:700; color: var(--ink-soft); box-shadow: var(--shadow-sm);
+    display:inline-flex; align-items:center; gap:6px; max-width:340px; margin:0 auto;
+    background:#fff; border:1.5px solid var(--mint-line); border-radius:999px;
+    padding:7px 14px; font-size:0.84rem; font-weight:600;
   }
-  .stat-chip b{ display:block; font-family:'Baloo 2'; font-size:1.15rem; color: var(--ink); }
-
-  .hero-stack{ position:relative; height:260px; max-width:340px; margin:0 auto; }
+  .stat-chip b{ color:var(--pink-deep); font-weight:800; }
+  .hero-stack{ position:relative; min-height:220px; }
   .stack-card{
     position:absolute; width:168px; height:200px; border-radius:26px; box-shadow: var(--shadow);
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
@@ -129,10 +130,11 @@
   .stack-card:hover{ transform: translateY(-6px) rotate(0deg) scale(1.04) !important; }
   .sc1{ background: linear-gradient(160deg,#FFE3EC,#FFC7DA); left:0; top:44px; transform: rotate(-9deg); z-index:1; }
   .sc2{ background: linear-gradient(160deg,#E4DBFF,#CBB8FF); left:150px; top:6px; transform: rotate(7deg); z-index:2; }
+  .sc3{ background: linear-gradient(160deg,#DFF6E8,#BEEFDD); left:300px; top:38px; transform: rotate(-5deg); z-index:1; }
   .sticker{
-    position:absolute; top:-6px; right:6px; width:78px; height:78px; border-radius:50%; background:var(--yellow);
+    position:absolute; top:-10px; right:-18px; width:60px; height:60px; border-radius:50%; background:var(--yellow);
     display:flex; align-items:center; justify-content:center; text-align:center; font-family:'Baloo 2'; font-weight:700;
-    font-size:0.72rem; color:#5A4300; transform: rotate(11deg); box-shadow: var(--shadow-sm); z-index:3; line-height:1.15;
+    font-size:0.64rem; color:#5A4300; transform: rotate(11deg); box-shadow: var(--shadow-sm); z-index:3; line-height:1.15;
     border: 3px solid #fff;
   }
   @media(max-width:480px){ .hero-stack{ transform: scale(0.85); } }
@@ -152,6 +154,7 @@
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6'><path d='M0 0l5 6 5-6z' fill='%236E6280'/></svg>");
     background-repeat:no-repeat; background-position: right 13px center;
   }
+  select#sortSelect:hover, select#sortSelect:focus{ border-color:var(--pink-deep); outline:none; }
   .range-wrap{
     background: var(--panel); border:1.5px solid var(--mint-line); border-radius:16px;
     padding:8px 16px; display:flex; align-items:center; gap:12px;
@@ -172,8 +175,11 @@
   .card{
     background: var(--panel); border-radius: 24px; padding:14px 14px 16px;
     box-shadow: var(--shadow-sm); cursor:pointer; position:relative; overflow:hidden;
-    border: 1px solid transparent; transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    border: 1.5px solid transparent; transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
   }
+  #sec-animals .card{ border-color:#F6C9D8; }
+  #sec-food .card{ border-color:#F5D994; }
+  #sec-characters .card{ border-color:#D7C8F7; }
   .card:hover{ transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--mint-line); }
   .card.squish-active{ animation: press-squish .32s ease; }
   @keyframes press-squish{
@@ -357,11 +363,7 @@
 <header class="top">
   <div class="top-row">
     <div class="brand">
-      <div class="brand-mark">🫧</div>
-      <div class="brand-text">
-        <div class="name">Squoosh & Co.</div>
-        <div class="tag">handmade squishies</div>
-      </div>
+      <div class="brand-mark"><img src="logo1.png" alt="Twenty1 Studio logo"></div>
     </div>
     <div class="top-right">
       <nav class="groups" id="navGroups"></nav>
@@ -373,21 +375,21 @@
 <section class="hero-section">
   <div class="hero">
     <div>
-      <div class="hero-eyebrow">🧵 Handmade in small batches</div>
       <h1>Soft things worth<br><span class="sq">squishing.
         <svg viewBox="0 0 200 10" preserveAspectRatio="none"><path d="M2 8 C 40 2, 80 2, 100 6 C 130 10, 160 4, 198 6" stroke="var(--yellow)" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
       </span></h1>
-      <p class="sub">Browse every squishy by group below, pick your color and size, and add as many as you like to your cart. When you're ready, place one order — we'll confirm details with you on Telegram, no payment needed up front.</p>
+      <p class="sub">Browse every squishy by group below, pick your color and size, and add as many as you like to your cart. When you're ready, place an order and we'll confirm details with you on Telegram! <strong>No payment needed up front!</strong></p>
       <div class="hero-stats">
         <div class="stat-chip"><b>3</b>Collections</div>
         <div class="stat-chip"><b>20+</b>Squishies</div>
-        <div class="stat-chip"><b>1:1</b>Made to order</div>
+        <div class="stat-chip"><b>100%</b>Happiness</div>
       </div>
     </div>
     <div class="hero-stack">
-      <div class="sticker">handmade<br>with ♥</div>
+      <div class="sticker">squish<br>with ♥</div>
       <div class="stack-card sc1">🐼<span class="cap">Panda Bun</span></div>
       <div class="stack-card sc2">🍩<span class="cap">Fresh Donut</span></div>
+      <div class="stack-card sc3">🍓<span class="cap">Berry Pop</span></div>
     </div>
   </div>
   <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none">
