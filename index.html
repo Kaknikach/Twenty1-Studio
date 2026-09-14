@@ -3,23 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Squoosh & Co. — Squishy Shop</title>
+<title>Twenty1 Studio — Squishies & Pokémon Cards</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg: #FFFFFF;
-    --bg-alt: #FFFFFF;
+    --bg-alt: #FFF6EE;
     --panel: #FFFFFF;
-    --ink: #33263F;
+    --ink: #2A1F2E;
     --ink-soft: #6E6280;
     --pink: #FF8FB1;
     --pink-deep: #FF6B95;
-    --lav: #B49CFF;
-    --lav-deep: #9678FF;
-    --yellow: #FFD166;
+    --peach: #FFC4A3;
+    --peach-deep: #FF9B7A;
+    --yellow: #FFE66D;
+    --yellow-deep: #FFD166;
+    --lav: #FFC4A3;
+    --lav-deep: #FF9B7A;
     --coral: #FF6B6B;
-    --mint-line: #C9EBDD;
+    --line: #F3D5C8;
+    --mint-line: #F3D5C8;
     --radius-blob: 42% 58% 63% 37% / 45% 41% 59% 55%;
     --shadow: 0 14px 30px -14px rgba(74,45,99,0.28);
     --shadow-sm: 0 6px 14px -8px rgba(74,45,99,0.25);
@@ -45,41 +49,41 @@
     background: #fff;
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--mint-line);
-    padding: 14px clamp(16px,4vw,44px);
+    padding: 8px 0;
   }
   .top-row{
     display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
-    max-width: 1180px; margin:0 auto;
+    max-width: 1400px; margin:0 auto; padding:0 clamp(18px,3vw,36px);
   }
   .brand{ display:flex; align-items:center; gap:10px; }
   .brand-mark{
-    width:220px; height:86px; border-radius:0;
+    width:640px; height:110px; max-width:100%; border-radius:0;
     background:transparent;
-    display:flex; align-items:center; justify-content:center;
+    display:flex; align-items:center; justify-content:flex-start;
     overflow:hidden;
   }
   .brand-mark img{
-    width:100%; height:100%; object-fit:cover; object-position:center 45%;
+    width:100%; height:100%; object-fit:contain; object-position:left center; transform:scale(1.35); transform-origin:left center;
   }
 
-  .top-right{ display:flex; align-items:center; gap:14px; }
+  .top-right{ display:flex; align-items:center; gap:14px; margin-left:auto; }
 
   nav.groups{ display:flex; gap:6px; flex-wrap:wrap; }
   nav.groups button{
     background:none; border:1.5px solid transparent; color:var(--ink-soft);
-    padding:7px 14px; border-radius:999px; font-weight:700; font-size:0.85rem; cursor:pointer;
+    padding:9px 16px; border-radius:999px; font-weight:700; font-size:0.95rem; cursor:pointer;
     transition: all .18s ease;
   }
   nav.groups button:hover{ border-color: var(--pink-deep); color: var(--ink); }
   nav.groups button.active{
-    background: linear-gradient(135deg, var(--pink), var(--pink-deep));
+    background: linear-gradient(135deg, var(--pink), var(--peach-deep));
     color:#fff; border-color: transparent;
     box-shadow: 0 8px 16px -8px rgba(255,107,149,0.55);
   }
 
   .cart-btn{
     position:relative; background:#fff; border:1.5px solid var(--mint-line); border-radius:999px;
-    padding:9px 16px; font-weight:700; font-size:0.88rem; cursor:pointer; display:flex; align-items:center; gap:7px;
+    padding:10px 18px; font-weight:700; font-size:0.95rem; cursor:pointer; display:flex; align-items:center; gap:8px;
     color: var(--ink); transition: transform .15s ease;
   }
   .cart-btn:hover{ transform: translateY(-1px); border-color: var(--pink-deep); }
@@ -90,12 +94,18 @@
   .cart-count.zero{ background:#D9D2E6; }
 
   /* ---------- Hero ---------- */
-  .hero-section{ position:relative; overflow:hidden; padding-bottom: 34px; }
+  .hero-section{ position:relative; overflow:visible; padding-bottom: 0; }
   .hero{
-    max-width:1180px; margin: 0 auto; padding: 46px clamp(16px,4vw,44px) 10px;
-    display:grid; grid-template-columns: 1.15fr 0.85fr; gap: 30px; align-items:center;
+    max-width:1400px; margin: 0 auto; padding: 22px clamp(18px,3vw,36px) 8px;
+    display:grid; grid-template-columns: 1.15fr 0.85fr; grid-template-rows: auto auto;
+    column-gap: 20px; row-gap: 10px; align-items:start;
   }
-  @media(max-width:820px){ .hero{ grid-template-columns:1fr; text-align:center; } }
+  .hero-copy{ grid-column:1; grid-row:1; }
+  .hero-stack{ grid-column:2; grid-row:1 / span 2; }
+  @media(max-width:820px){
+    .hero{ grid-template-columns:1fr; text-align:center; }
+    .hero-copy, .hero-stack, .hero .controls{ grid-column:1; grid-row:auto; }
+  }
 
   .hero-eyebrow{
     display:inline-flex; align-items:center; gap:7px; background:#fff; border:1.5px solid var(--mint-line);
@@ -103,14 +113,14 @@
     margin-bottom:16px;
   }
   .hero h1{
-    font-size: clamp(2.2rem, 4.6vw, 3.4rem); line-height:1.05; margin:0 0 12px; font-weight:800;
+    font-size: clamp(2.2rem, 4.6vw, 3.4rem); line-height:1.05; margin:0 0 8px; font-weight:800;
   }
   .hero h1 .sq{ color: var(--pink-deep); position:relative; white-space:nowrap; }
   .hero h1 .sq svg{ position:absolute; left:0; bottom:9px; width:100%; height:10px; }
-  .hero p.sub{ color: var(--ink-soft); font-size:1.03rem; max-width:44ch; margin:0 0 24px; }
-  @media(max-width:820px){ .hero p.sub{ margin:0 auto 24px; } }
+  .hero p.sub{ color: var(--ink-soft); font-size:1.03rem; max-width:44ch; margin:0 0 14px; }
+  @media(max-width:820px){ .hero p.sub{ margin:0 auto 14px; } }
 
-  .hero-stats{ display:flex; gap:10px; flex-wrap:wrap; }
+  .hero-stats{ display:flex; gap:10px; flex-wrap:wrap; margin:30px 0 0; }
   @media(max-width:820px){ .hero-stats{ justify-content:center; } }
   .stat-chip{
     display:inline-flex; align-items:center; gap:6px; max-width:340px; margin:0 auto;
@@ -118,19 +128,23 @@
     padding:7px 14px; font-size:0.84rem; font-weight:600;
   }
   .stat-chip b{ color:var(--pink-deep); font-weight:800; }
-  .hero-stack{ position:relative; min-height:220px; }
+  .hero-stack{ position:relative; min-height:0; height:100%; }
   .stack-card{
     position:absolute; width:168px; height:200px; border-radius:26px; box-shadow: var(--shadow);
-    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+    display:flex; flex-direction:column; align-items:center; justify-content:space-between; gap:0;
     font-size:3.1rem; transition: transform .25s ease; cursor:default;
+    background: transparent; padding: 8px;
+  }
+  .stack-card img{
+    width:100%; height:140px; object-fit:cover; border-radius:12px; border: 1px solid var(--pink-deep);
   }
   .stack-card .cap{
     font-family:'Baloo 2'; font-size:0.82rem; color: var(--ink); background:#fff; padding:4px 13px; border-radius:999px;
   }
   .stack-card:hover{ transform: translateY(-6px) rotate(0deg) scale(1.04) !important; }
-  .sc1{ background: linear-gradient(160deg,#FFE3EC,#FFC7DA); left:0; top:44px; transform: rotate(-9deg); z-index:1; }
-  .sc2{ background: linear-gradient(160deg,#E4DBFF,#CBB8FF); left:150px; top:6px; transform: rotate(7deg); z-index:2; }
-  .sc3{ background: linear-gradient(160deg,#DFF6E8,#BEEFDD); left:300px; top:38px; transform: rotate(-5deg); z-index:1; }
+  .sc1{ left:0; top:36px; transform: rotate(-9deg); z-index:1; }
+  .sc2{ left:150px; top:4px; transform: rotate(7deg); z-index:2; }
+  .sc3{ left:300px; top:32px; transform: rotate(-5deg); z-index:1; }
   .sticker{
     position:absolute; top:-10px; right:-18px; width:60px; height:60px; border-radius:50%; background:var(--yellow);
     display:flex; align-items:center; justify-content:center; text-align:center; font-family:'Baloo 2'; font-weight:700;
@@ -139,12 +153,14 @@
   }
   @media(max-width:480px){ .hero-stack{ transform: scale(0.85); } }
 
-  .hero-wave{ display:block; width:100%; height:auto; margin-top: 24px; }
-
   /* ---------- Controls bar ---------- */
-  .controls{
-    max-width:1180px; margin: 0 auto 6px; padding: 14px clamp(16px,4vw,44px);
-    display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap;
+  .hero .controls{
+    grid-column:1; grid-row:2; align-self:start;
+    max-width:none; margin:16px 0 0; padding:0;
+    display:flex; align-items:center; justify-content:flex-start; gap:14px; flex-wrap:wrap;
+  }
+  @media(max-width:820px){
+    .hero .controls{ justify-content:center; }
   }
   .control-group{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
   .control-label{ font-size:0.78rem; font-weight:700; color: var(--ink-soft); text-transform:uppercase; letter-spacing:.05em; }
@@ -163,8 +179,8 @@
   .range-val{ font-size:0.82rem; font-weight:700; color:var(--pink-deep); min-width:52px; }
 
   /* ---------- Sections ---------- */
-  main{ max-width:1180px; margin: 0 auto; padding: 10px clamp(16px,4vw,44px) 60px; }
-  .group-section{ margin-top: 46px; scroll-margin-top: 90px; }
+  main{ max-width:1400px; margin: 0 auto; padding: 4px clamp(18px,3vw,36px) 60px; }
+  .group-section{ margin-top: 18px; scroll-margin-top: 90px; }
   .group-head{ display:flex; align-items:baseline; gap:12px; margin-bottom:16px; }
   .group-head h2{ font-size:1.5rem; margin:0; font-weight:700; }
   .group-head .count{ color: var(--ink-soft); font-size:0.85rem; }
@@ -177,9 +193,6 @@
     box-shadow: var(--shadow-sm); cursor:pointer; position:relative; overflow:hidden;
     border: 1.5px solid transparent; transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease;
   }
-  #sec-animals .card{ border-color:#F6C9D8; }
-  #sec-food .card{ border-color:#F5D994; }
-  #sec-characters .card{ border-color:#D7C8F7; }
   .card:hover{ transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--mint-line); }
   .card.squish-active{ animation: press-squish .32s ease; }
   @keyframes press-squish{
@@ -189,7 +202,10 @@
 
   .card-media{
     height:130px; border-radius:18px; margin-bottom:12px;
-    display:flex; align-items:center; justify-content:center; font-size:2.6rem; position:relative;
+    display:flex; align-items:center; justify-content:center; font-size:2.6rem; position:relative; overflow:hidden;
+  }
+  .card-media img{
+    width:100%; height:100%; object-fit:cover;
   }
   .badge{
     position:absolute; top:10px; left:10px; font-size:0.66rem; font-weight:700; letter-spacing:.03em;
@@ -248,10 +264,13 @@
   }
   .gallery-track::-webkit-scrollbar{ display:none; }
   .gallery-slide{
-    flex:0 0 100%; scroll-snap-align:center; height:150px; display:flex; flex-direction:column;
-    align-items:center; justify-content:center; font-size:3.3rem; gap:6px;
+    flex:0 0 100%; scroll-snap-align:center; height:280px; display:flex; flex-direction:column;
+    align-items:center; justify-content:center; font-size:3.3rem; gap:6px; position:relative;
   }
-  .gallery-slide .slide-label{ font-family:'Baloo 2'; font-size:0.8rem; color: var(--ink); background:#fff; padding:3px 12px; border-radius:999px; }
+  .gallery-slide img{
+    width:100%; height:100%; object-fit:contain;
+  }
+  .gallery-slide .slide-label{ font-family:'Baloo 2'; font-size:0.8rem; color: var(--ink); background:#fff; padding:3px 12px; border-radius:999px; position:absolute; bottom:12px; }
   .gallery-dots{ display:flex; gap:6px; justify-content:center; }
   .gallery-dot{ width:7px; height:7px; border-radius:50%; background:#C9BEDB; cursor:pointer; transition: all .2s ease; }
   .gallery-dot.active{ background: var(--pink-deep); width:20px; border-radius:5px; }
@@ -286,7 +305,7 @@
 
   .primary-btn{
     width:100%; border:none; border-radius:16px; padding:14px 18px; font-weight:700; font-size:1rem;
-    cursor:pointer; background: linear-gradient(135deg, var(--pink), var(--pink-deep)); color:#fff;
+    cursor:pointer;     background: linear-gradient(135deg, var(--pink), var(--peach-deep)); color:#fff;
     box-shadow: 0 12px 22px -10px rgba(255,107,149,0.55); transition: transform .12s ease;
   }
   .primary-btn:hover{ transform: translateY(-1px); }
@@ -374,11 +393,11 @@
 
 <section class="hero-section">
   <div class="hero">
-    <div>
+    <div class="hero-copy">
       <h1>Soft things worth<br><span class="sq">squishing.
         <svg viewBox="0 0 200 10" preserveAspectRatio="none"><path d="M2 8 C 40 2, 80 2, 100 6 C 130 10, 160 4, 198 6" stroke="var(--yellow)" stroke-width="4" fill="none" stroke-linecap="round"/></svg>
       </span></h1>
-      <p class="sub">Browse every squishy by group below, pick your color and size, and add as many as you like to your cart. When you're ready, place an order and we'll confirm details with you on Telegram! <strong>No payment needed up front!</strong></p>
+      <p class="sub">Squishies and Pokémon cards, all in one cart. Pick your options, then place an order — we'll confirm on Telegram. <strong>No payment needed up front!</strong></p>
       <div class="hero-stats">
         <div class="stat-chip"><b>3</b>Collections</div>
         <div class="stat-chip"><b>20+</b>Squishies</div>
@@ -387,37 +406,33 @@
     </div>
     <div class="hero-stack">
       <div class="sticker">squish<br>with ♥</div>
-      <div class="stack-card sc1">🐼<span class="cap">Panda Bun</span></div>
-      <div class="stack-card sc2">🍩<span class="cap">Fresh Donut</span></div>
-      <div class="stack-card sc3">🍓<span class="cap">Berry Pop</span></div>
+      <div class="stack-card sc1"><img src="pika.jpeg" alt="Pokemon Cards"><span class="cap">Pokemon Cards</span></div>
+      <div class="stack-card sc2"><img src="squishy.jpg" alt="Squishies"><span class="cap">Squishies</span></div>
+      <div class="stack-card sc3"><img src="hirono.jpg" alt="Pop Mart"><span class="cap">Pop Mart</span></div>
+    </div>
+    <div class="controls">
+      <div class="control-group">
+        <span class="control-label">Sort</span>
+        <select id="sortSelect">
+          <option value="featured">Featured</option>
+          <option value="low">Price: Low to High</option>
+          <option value="high">Price: High to Low</option>
+        </select>
+      </div>
+      <div class="control-group">
+        <span class="control-label">Price up to</span>
+        <div class="range-wrap">
+          <input type="range" id="priceRange" min="0" max="30" step="1" value="30">
+          <span class="range-val" id="priceRangeVal">$30</span>
+        </div>
+      </div>
     </div>
   </div>
-  <svg class="hero-wave" viewBox="0 0 1440 60" preserveAspectRatio="none">
-    <path d="M0 30 C 240 60, 480 0, 720 26 C 960 52, 1200 8, 1440 32 L1440 60 L0 60 Z" fill="var(--bg-alt)"></path>
-  </svg>
 </section>
-
-<div class="controls">
-  <div class="control-group">
-    <span class="control-label">Sort</span>
-    <select id="sortSelect">
-      <option value="featured">Featured</option>
-      <option value="low">Price: Low to High</option>
-      <option value="high">Price: High to Low</option>
-    </select>
-  </div>
-  <div class="control-group">
-    <span class="control-label">Price up to</span>
-    <div class="range-wrap">
-      <input type="range" id="priceRange" min="0" max="30" step="1" value="30">
-      <span class="range-val" id="priceRangeVal">$30</span>
-    </div>
-  </div>
-</div>
 
 <main id="mainGroups"></main>
 
-<footer>Squoosh & Co. — placeholder shop layout. Swap in your real products, photos, and videos.</footer>
+<footer>Twenty1 Studio — squishies & Pokémon cards. Placeholder products for now — swap in your real items, photos, and videos.</footer>
 
 <!-- Product modal -->
 <div class="overlay" id="productOverlay">
@@ -426,10 +441,7 @@
     <div class="modal-inner">
       <div class="modal-media">
         <div class="video-box" id="videoBox">
-          <div class="video-fallback">
-            <div class="play-dot">▶</div>
-            <div>Product video preview<br><span style="opacity:.7">(swap this box's &lt;video src&gt; with the real clip)</span></div>
-          </div>
+          <video src="cubevid.mp4" controls autoplay muted style="width:100%; height:100%; object-fit:contain; border-radius:18px;"></video>
         </div>
         <div class="gallery-wrap">
           <div class="gallery-track" id="galleryTrack"></div>
@@ -533,29 +545,31 @@
 
 <script>
 // ---------- Placeholder data ----------
-const TELEGRAM_BOT_USERNAME = "SquooshOrderBot"; // TODO: replace with your real bot username
+const TELEGRAM_BOT_USERNAME = "@twenty1_studio_order_bot"; // TODO: replace with your real bot username
 
 const groups = [
   {
-    id: "animals", name: "Animal Squishies", emoji: "🐻", bg: "linear-gradient(150deg,#FFE3EC,#FFC7DA)",
+    id: "squishy", name: "Squishies", bg: "linear-gradient(150deg,#FFE3EC,#FFC7DA)",
     products: [
-      { id:"a1", name:"Sleepy Panda Bun", price:14, inStock:true, desc:"Slow-rise foam panda, soft matte finish. A best-seller for a reason.", emoji:"🐼", colors:[{n:"Classic",h:"#F5F5F5"},{n:"Blush",h:"#FFC7DA"},{n:"Mint",h:"#BEEFDD"}], sizes:["Small","Medium","Jumbo"] },
-      { id:"a2", name:"Chubby Fox Loaf", price:12, inStock:true, desc:"Fox-shaped loaf squishy with a subtle bready scent.", emoji:"🦊", colors:[{n:"Amber",h:"#FFB27A"},{n:"Snow",h:"#FFFFFF"}], sizes:["Small","Medium"] },
-      { id:"a3", name:"Bubble Tea Cat", price:16, inStock:false, desc:"Cat peeking out of a bubble tea cup, slow-rise squish.", emoji:"🐱", colors:[{n:"Taro",h:"#C9A7FF"},{n:"Milk Tea",h:"#E3C9A0"}], sizes:null },
-      { id:"a4", name:"Pudgy Penguin", price:11, inStock:true, desc:"Round little penguin, extra squish on the belly.", emoji:"🐧", colors:[{n:"Classic",h:"#2E2E3A"},{n:"Icy Blue",h:"#BEE3F8"}], sizes:["Small","Medium"] }
+      { id:"a1", name:"Needoh Nice Cube", price:4, inStock:true, desc:"Maltose filling, square-shape fidget toy. A best-seller for a reason.", image:"cube.jpeg", video:"cubevid.mp4", colors:[{n:"Blue Cube",h:"#00d9ff"},{n:"Pink Cube",h:"#ff7be2"},{n:"Purple Cube",h:"#b97bff"}], sizes:null },
+      { id:"a2", name:"Dumpling", price:4, inStock:true, desc:"Blind Box Dumpling Squishy! Shaped like a mini steamed bao bun inside its own container, each mystery box hides a soft dumpling. Unfortunately, there are no other sizes left in stock", image:"dumpling.webp", video:"dumplingvid.mp4", colors:[{n:"Blindbox",h:"#fffff"}], sizes:null },
+      { id:"a3", name:"Slimes", price:5, inStock:true, desc:"Thick and glossy slimes.", image:"slimeblue.png", video:"slimevid.mp4", colors:[{n:"Mint Chocolate Slime",h:"#9ce1ff"},{n:"Strawberry Pink Slime",h:"#ffafd5"}], sizes:null },
+      { id:"a4", name:"Smushers (Off-Brand)", price:4, inStock:true, desc:"Round little penguin, extra squish on the belly.", image:"smusher.png", video:"smushersvid.mp4", colors:[{n:"White Smusher",h:"#fffff"},{n:"Blue Smusher",h:"#BEE3F8"},{n:"Pink Smusher",h:"#ed95d0"},{n:"Yellow Smusher",h:"#faea70"}], sizes:["Small","Medium"] },
+      { id:"a5", name:"Smushers (Off-Brand)", price:4, inStock:true, desc:"Round little penguin, extra squish on the belly.", image:"smusher.png", video:"smushersvid.mp4", colors:[{n:"White Smusher",h:"#fffff"},{n:"Blue Smusher",h:"#BEE3F8"},{n:"Pink Smusher",h:"#ed95d0"},{n:"Yellow Smusher",h:"#faea70"}], sizes:["Small","Medium"] },
+      { id:"a6", name:"Smushers (Off-Brand)", price:4, inStock:true, desc:"Round little penguin, extra squish on the belly.", image:"smusher.png", video:"smushersvid.mp4", colors:[{n:"White Smusher",h:"#fffff"},{n:"Blue Smusher",h:"#BEE3F8"},{n:"Pink Smusher",h:"#ed95d0"},{n:"Yellow Smusher",h:"#faea70"}], sizes:["Small","Medium"] }
     ]
   },
   {
-    id: "food", name: "Food Squishies", emoji: "🍩", bg: "linear-gradient(150deg,#FFF0C2,#FFE39A)",
+    id: "pokemon", name: "Pokemon Cards", bg: "linear-gradient(150deg,#FFE8D8,#FFC4A3)",
     products: [
-      { id:"f1", name:"Strawberry Donut", price:9, inStock:true, desc:"Glazed donut squishy with strawberry drizzle print.", emoji:"🍩", colors:[{n:"Strawberry",h:"#FF8FA3"},{n:"Choc",h:"#8B5E3C"},{n:"Matcha",h:"#B7D99B"}], sizes:null },
-      { id:"f2", name:"Sushi Roll Trio", price:13, inStock:true, desc:"Set of 3 mini sushi squishies, great desk toy.", emoji:"🍣", colors:[{n:"Classic Mix",h:"#F5F5F5"}], sizes:null },
-      { id:"f3", name:"Jumbo Peach Bun", price:18, inStock:true, desc:"Oversized peach-shaped bun, super slow rise.", emoji:"🍑", colors:[{n:"Peach",h:"#FFB6A3"},{n:"Golden",h:"#FFD27A"}], sizes:["Medium","Jumbo"] },
-      { id:"f4", name:"Avocado Toast", price:10, inStock:false, desc:"Avo toast slice with squishy egg on top.", emoji:"🥑", colors:[{n:"Classic",h:"#8FBF6B"}], sizes:null }
+      { id:"f1", name:"Mega Dream EX (M2A)", price:10.5, inStock:true, desc:"Pokemon TCG Japanese Mega Dream EX (M2A) Booster Pack. 1 pack 10 cards", image:"dreamexpack.jpg", video:"dreamexvid.mp4", colors:[{n:"Dream EX",h:"#F5F5F5"}], sizes:null },
+      { id:"f2", name:"Mega Ninja Spinner (M4)", price:4.5, inStock:true, desc:"Pokemon TCG Japanese Mega Ninja Spinner (M4) Booster Pack. 1 pack 10 cards", image:"ninja.webp", colors:[{n:"Ninja Spinner",h:"#F5F5F5"}], sizes:null },
+      { id:"f3", name:"SV8A Terastal", price:11.5, inStock:true, desc:"Pokemon TCG Japanese SV8A Terastal Festival Expansion Booster Pack. 1 pack 10 cards", image:"sv8a.avif", colors:[{n:"SV8A Terastal",h:"#F5F5F5"}], sizes:null },
+      { id:"f4", name:"White Flare SV11W", price:5.5, inStock:true, desc:"Pokemon TCG Japanese SV11W White Flare Booster Pack. 1 pack 10 cards", image:"whiteflarepack.webp", colors:[{n:"White Flare",h:"#F5F5F5"}], sizes:null }
     ]
   },
   {
-    id: "characters", name: "Fantasy & Characters", emoji: "⭐", bg: "linear-gradient(150deg,#E4DBFF,#CBB8FF)",
+    id: "popmart", name: "Pop Mart", bg: "linear-gradient(150deg,#FFF6C9,#FFE66D)",
     products: [
       { id:"c1", name:"Star Buddy", price:15, inStock:true, desc:"Soft glittery star with an embroidered smiley face.", emoji:"⭐", colors:[{n:"Gold",h:"#FFD166"},{n:"Lilac",h:"#C9A7FF"},{n:"Sky",h:"#9AD1FF"}], sizes:["Small","Medium","Jumbo"] },
       { id:"c2", name:"Mini Dragon Egg", price:20, inStock:true, desc:"Cracked egg squishy revealing a sleepy baby dragon.", emoji:"🥚", colors:[{n:"Emerald",h:"#6FCF97"},{n:"Ruby",h:"#FF6B6B"}], sizes:["Medium","Jumbo"] },
@@ -608,7 +622,7 @@ function setupActiveNavObserver(){
 
 // ---------- Render main grid ----------
 const mainGroups = document.getElementById("mainGroups");
-function priceLabel(p){ return "$" + p.toFixed(0); }
+function priceLabel(p){ return "$" + p.toFixed(2); }
 
 function sortedProducts(list){
   const filtered = list.filter(p => p.price <= maxPrice);
@@ -627,7 +641,7 @@ function renderAll(){
     section.id = "sec-" + g.id;
     section.innerHTML = `
       <div class="group-head">
-        <h2>${g.emoji} ${g.name}</h2>
+        <h2>${g.name}</h2>
         <span class="count">${list.length} item${list.length===1?"":"s"}</span>
         <div class="group-line"></div>
       </div>
@@ -643,7 +657,7 @@ function renderAll(){
       card.innerHTML = `
         <div class="card-media" style="background:${g.bg}">
           <span class="badge ${p.inStock ? "in" : "out"}">${p.inStock ? "In Stock" : "Sold Out"}</span>
-          <span>${p.emoji}</span>
+          ${p.image ? `<img src="${p.image}" alt="${p.name}">` : `<span>${p.emoji}</span>`}
         </div>
         <div class="card-name">${p.name}</div>
         <div class="card-price">${priceLabel(p.price)}</div>
@@ -691,32 +705,69 @@ function openProduct(p, g){
   document.getElementById("modalPrice").textContent = priceLabel(p.price);
   document.getElementById("modalDesc").textContent = p.desc;
   document.getElementById("qtyNum").textContent = qty;
+  
+  // Set video source
+  const videoElement = document.querySelector("#videoBox video");
+  if(videoElement && p.video) videoElement.src = p.video;
+  else if(videoElement) videoElement.src = "cubevid.mp4";
 
   // Build gallery: one photo slide per color
   galleryTrack.innerHTML = "";
   galleryDots.innerHTML = "";
-  p.colors.forEach((c, i)=>{
-    const slide = document.createElement("div");
-    slide.className = "gallery-slide";
-    slide.style.background = `linear-gradient(150deg, ${c.h}, ${g.bg.match(/#[0-9A-Fa-f]{6}/g)?.[1] || c.h})`;
-    slide.innerHTML = `<span>${p.emoji}</span><span class="slide-label">${c.n}</span>`;
-    galleryTrack.appendChild(slide);
+  const galleryWrap = document.querySelector(".gallery-wrap");
+  
+  if(p.colors && p.colors.length > 0){
+    galleryWrap.style.display = "flex";
+    const modalMedia = document.querySelector(".modal-media");
+    const videoBox = document.getElementById("videoBox");
+    modalMedia.style.minHeight = "auto";
+    videoBox.style.height = "auto";
+    p.colors.forEach((c, i)=>{
+      const slide = document.createElement("div");
+      slide.className = "gallery-slide";
+      slide.style.background = "#FFF";
+      const colorImageMap = { 
+        "Blue Cube": "bluecube.webp", 
+        "Pink Cube": "pinkcube.avif", 
+        "Purple Cube": "purple.avif", 
+        "Mint Chocolate Slime": "slimeblue.png", 
+        "Strawberry Pink Slime": "slimepink.png",
+        "Blindbox": "bundumpling.jpeg",
+        "White Smusher": "smusher.png",
+        "Pink Smusher": "smusher.png",
+        "Blue Smusher": "smusher.png",
+        "Yellow Smusher": "smusher.png",
+        "Ninja Spinner": "ninjaspinner.webp",
+        "SV8A Terastal": "sv8aterastal.png",
+        "White Flare": "whiteflare.jpg",
+        "Dream EX": "dreamex.jpg"
+      };
+      const slideImage = colorImageMap[c.n] || p.image;
+      slide.innerHTML = `${p.image ? `<img src="${slideImage}" alt="${p.name}">` : `<span>${p.emoji}</span>`}<span class="slide-label">${c.n}</span>`;
+      galleryTrack.appendChild(slide);
 
-    const dot = document.createElement("div");
-    dot.className = "gallery-dot" + (i===0 ? " active" : "");
-    dot.onclick = ()=> scrollGalleryTo(i);
-    galleryDots.appendChild(dot);
-  });
-
-  // Sync gallery scroll -> color selection
-  galleryTrack.onscroll = ()=>{
-    window.requestAnimationFrame(()=>{
-      const w = galleryTrack.clientWidth || 1;
-      const idx = Math.round(galleryTrack.scrollLeft / w);
-      updateSelectedColorByIndex(idx);
+      const dot = document.createElement("div");
+      dot.className = "gallery-dot" + (i===0 ? " active" : "");
+      dot.onclick = ()=> scrollGalleryTo(i);
+      galleryDots.appendChild(dot);
     });
-  };
 
+    // Sync gallery scroll -> color selection
+    galleryTrack.onscroll = ()=>{
+      window.requestAnimationFrame(()=>{
+        const w = galleryTrack.clientWidth || 1;
+        const idx = Math.round(galleryTrack.scrollLeft / w);
+        updateSelectedColorByIndex(idx);
+      });
+    };
+  } else {
+    galleryWrap.style.display = "none";
+    const modalMedia = document.querySelector(".modal-media");
+    const videoBox = document.getElementById("videoBox");
+    modalMedia.style.minHeight = "auto";
+    videoBox.style.height = "400px";
+  }
+  
   const colorRow = document.getElementById("colorRow");
   colorRow.innerHTML = "";
   p.colors.forEach((c, i)=>{
@@ -796,7 +847,7 @@ document.getElementById("addToCartBtn").onclick = ()=>{
     cart.push({
       key, productId: activeProduct.id, name: activeProduct.name, price: activeProduct.price,
       color: selectedColor ? selectedColor.n : null, colorHex: selectedColor ? selectedColor.h : "#eee",
-      size: selectedSize, qty, emoji: activeProduct.emoji, bg: activeGroup.bg
+      size: selectedSize, qty, emoji: activeProduct.emoji, image: activeProduct.image, bg: activeGroup.bg
     });
   }
   updateCartCount();
@@ -823,13 +874,13 @@ function renderCart(){
   const list = document.getElementById("cartList");
   list.innerHTML = "";
   if(cart.length === 0){
-    list.innerHTML = `<div class="cart-empty">Your cart is empty.<br>Add some squishies to get started!</div>`;
+    list.innerHTML = `<div class="cart-empty">Your cart is empty.<br>Add something cute to get started!</div>`;
   }
   cart.forEach(item=>{
     const row = document.createElement("div");
     row.className = "cart-row";
     row.innerHTML = `
-      <div class="cart-thumb" style="background:${item.bg}">${item.emoji}</div>
+      <div class="cart-thumb" style="background:${item.bg}">${item.image ? `<img src="${item.image}" alt="${item.name}" style="width:40px;height:40px;object-fit:contain;">` : item.emoji}</div>
       <div class="cart-info">
         <div class="cn">${item.name}</div>
         <div class="cm">${[item.color, item.size].filter(Boolean).join(" · ") || "—"}</div>
@@ -886,7 +937,7 @@ document.getElementById("closeOrder").onclick = ()=> orderOverlay.classList.remo
 orderOverlay.onclick = (e)=>{ if(e.target === orderOverlay) orderOverlay.classList.remove("open"); };
 document.getElementById("backToCartBtn").onclick = ()=>{ orderOverlay.classList.remove("open"); openCart(); };
 
-document.getElementById("submitOrderBtn").onclick = ()=>{
+document.getElementById("submitOrderBtn").onclick = async () => {
   const name = document.getElementById("ofName").value.trim();
   const tg = document.getElementById("ofTelegram").value.trim();
   const contact = document.getElementById("ofContact").value.trim();
@@ -898,23 +949,49 @@ document.getElementById("submitOrderBtn").onclick = ()=>{
   }
 
   let total = 0;
-  const itemLines = cart.map(item=>{
-    total += item.price*item.qty;
-    return `• ${item.name} ×${item.qty}${item.color? " ("+item.color+(item.size? ", "+item.size:"")+")" : (item.size? " ("+item.size+")":"")} — ${priceLabel(item.price*item.qty)}`;
+  const itemLines = cart.map(item => {
+    total += item.price * item.qty;
+    return `• ${item.name} ×${item.qty}${item.color ? " (" + item.color + (item.size ? ", " + item.size : "") + ")" : (item.size ? " (" + item.size + ")" : "")} — ${priceLabel(item.price * item.qty)}`;
   }).join("\n");
 
   const lines = [
-    "New order — Squoosh & Co.",
+    "🛍️ *NEW ORDER — Twenty1 Studio*",
     "",
     itemLines,
     "",
-    `Total: ${priceLabel(total)}`,
+    `*Total:* ${priceLabel(total)}`,
     "",
-    `Name: ${name}`,
-    `Telegram: ${tg}`,
-    contact ? `Contact: ${contact}` : null,
-    notes ? `Notes: ${notes}` : null
+    `*Name:* ${name}`,
+    `*Telegram:* ${tg}`,
+    contact ? `*Contact:* ${contact}` : null,
+    notes ? `*Notes:* ${notes}` : null
   ].filter(Boolean).join("\n");
+
+  // --- TELEGRAM BOT AUTOMATION ---
+  const BOT_TOKEN = "AAHwLqSAQ9XHu_RwubriDhUTJ64aWbOI2cw"; 
+  const CHAT_ID = "8955339305";
+
+  const submitBtn = document.getElementById("submitOrderBtn");
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Sending...";
+
+  try {
+    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: CHAT_ID,
+        text: lines,
+        parse_mode: "Markdown"
+      })
+    });
+  } catch (err) {
+    console.error("Telegram order send error:", err);
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Submit Order";
+  }
+  // -------------------------------
 
   document.getElementById("msgPreview").textContent = lines;
   const tgUrl = "https://t.me/share/url?url=&text=" + encodeURIComponent(lines);
