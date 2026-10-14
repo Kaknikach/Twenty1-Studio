@@ -1782,15 +1782,17 @@
 
         <div class="order-field">
           <label for="ofName">Your name</label>
-          <input type="text" id="ofName" placeholder="e.g. Amy Chea">
+          <input type="text" id="ofName" placeholder="e.g. Amy Chea" maxlength="60" autocomplete="name">
         </div>
         <div class="order-field">
           <label for="ofTelegram">Telegram username</label>
-          <input type="text" id="ofTelegram" placeholder="@yourusername">
+          <input type="text" id="ofTelegram" placeholder="@yourusername" maxlength="33" autocomplete="off"
+            autocapitalize="none" autocorrect="off" spellcheck="false">
         </div>
         <div class="order-field">
-          <label for="ofContact">Phone Number)</label>
-          <input type="tel" inputmode="tel" id="ofContact" placeholder="012 345 678">
+          <label for="ofContact">Phone number</label>
+          <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="15" autocomplete="tel" id="ofContact"
+            placeholder="012345678">
         </div>
         <div class="order-field">
           <label for="ofDelivery">Location</label>
@@ -1895,7 +1897,7 @@
         products: [
           { id: "c1", name: "Hirono Tamed Wildgrass Blindbox", price: 14.5, inStock: false, desc: "A blindbox Hirono figure from the Tamed Wildgrass series.", image: "tamedwildgrass.png", colors: [{ n: "Tamed Wildgrass", h: "#F5F5F5" }], sizes: null },
           { id: "c2", name: "Hirono Road Journal Series", price: 25, inStock: false, desc: "Hirono Road Journal plush pendantt series blindbox.", image: "roadjournal.webp", video: "roadjournalvid.MP4", colors: [{ n: "Road Journal", h: "#F5F5F5" }], sizes: null },
-          { id: "c3", name: "Dimoo Earphone Case", price: 22, inStock: false, desc: "The secret theatre club, dimoo earphone case blindbox.", image: "dimooearphone.png", colors: [{ n: "The Secret Theatre CLub", h: "#F5F5F5" }], sizes: null },
+          { id: "c3", name: "Dimoo Earphone Case", price: 22, inStock: true, desc: "The secret theatre club, dimoo earphone case blindbox.", image: "dimooearphone.png", colors: [{ n: "The Secret Theatre CLub", h: "#F5F5F5" }], sizes: null },
         ]
       }
     ];
@@ -2299,6 +2301,14 @@
         alert("Please fill in your name and Telegram username so we can reach you.");
         return;
       }
+      if (!/^@?[A-Za-z0-9_]{5,32}$/.test(tg)) {
+        alert("Telegram username should be 5-32 characters: letters, numbers and underscores only.");
+        return;
+      }
+      if (contact && contact.length < 8) {
+        alert("Please enter a valid phone number (digits only), or leave it empty.");
+        return;
+      }
 
       let total = 0;
       const itemLines = cart.map(item => {
@@ -2320,21 +2330,17 @@
         notes ? `Notes: ${notes}` : null
       ].filter(Boolean).join("\n");
 
-      const BOT_TOKEN = "8955339305:AAHwLqSAQ9XHu_RwubriDhUTJ64aWbOI2cw";
-      const CHAT_ID = "-5329926582";
+      const WORKER_URL = "https://twenty1-orders.v69rd7g8fd.workers.dev/"; // your Cloudflare Worker address
 
       const submitBtn = document.getElementById("submitOrderBtn");
       submitBtn.disabled = true;
       submitBtn.textContent = "Sending...";
 
       try {
-        const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        const response = await fetch(WORKER_URL, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            chat_id: CHAT_ID,
-            text: lines
-          })
+          body: JSON.stringify({ text: lines })
         });
 
         const result = await response.json();
@@ -2411,6 +2417,19 @@
         window.scrollTo({ top: 0, behavior: "smooth" });
       };
     }
+
+    // ---------- Order form input limits ----------
+    function limitInput(id, pattern) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.addEventListener("input", () => {
+        const clean = el.value.replace(pattern, "");
+        if (clean !== el.value) el.value = clean;
+      });
+    }
+    limitInput("ofName", /[^\p{L}\p{M}\s'.-]/gu);   // letters, spaces, ' . -
+    limitInput("ofContact", /\D/g);                  // digits only
+    limitInput("ofTelegram", /[^A-Za-z0-9_@]/g);      // letters, numbers, _ and @
 
     setupActiveNavObserver();
   </script>
